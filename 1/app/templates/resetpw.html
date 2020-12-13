@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}Reset Password{% endblock %}
+{% block head %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+{% endblock %}
+{% block content %}
+<div class="header">
+    <h1>Reset Your Password</h1>
+</div>
+
+<form method="POST" action="">
+  {{ form.hidden_tag() }}
+  {{ wtf.form_field(form.email)}}
+  {{ wtf.form_field(form.password)}}  
+  {{ wtf.form_field(form.submit)}}
+  
+</form> 
+
+<style>
+    .header {
+        color: #000000;
+
+        margin-top: 100px;
+    }
+
+    a {
+        text-decoration: none;
+      }
+
+
+  .btn{
+    background-color: black;
+    color: white;
+    border: 2px solid black;
+  }
+  .btn:hover{
+    background-color: white;
+    color: black;
+    border: 2px solid black;
+  }
+</style>
+{% endblock %}

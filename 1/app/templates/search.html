@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+{% block content %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<div class="incomplete">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            <span>{{ message }}</span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+<div class="container">
+    <form action="{{ url_for('search') }}" method="POST">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Input information here" value="{{data}}"
+                           id="mail" name="data"><br>
+                    <span class="input-group-btn">
+                        <input class="btn btn-default" id="send" type="submit" value="Search" onclick="this.submit()">
+                    </span>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+    <h3>Incomplete</h3>
+        {% for todo in incomplete %}
+            <div class="border">
+                <p>{{todo.todo}}</p>
+                <p>Todo created on {{todo.todo_time.strftime("%m/%d/%y")}} at {{todo.todo_time.strftime('%I:%M %p')}} UTC</p>
+                <a class="btn btn-dark" href="{{ url_for('complete_todo', todo_id=todo.id)}}">Mark Complete</a>
+                <a class="btn btn-danger" href="{{ url_for('delete_todo', todo_id=todo.id)}}">Delete</a>
+                <a class="btn btn-info" href="{{ url_for('edit_todo', todo_id=todo.id)}}">Edit</a>
+            </div><br>
+        {% endfor %}
+</div>
+<div class="complete">
+    
+    <h3>Complete</h3>
+    {% for todo in complete %}
+        <div class="border">
+            <p>{{todo.todo}}</p>
+            <a class="btn btn-danger" href="{{ url_for('delete_todo', todo_id=todo.id)}}">Delete</a>
+        </div><br>
+    {% endfor %}
+</div>
+
+<style>
+    .incomplete{
+        margin-top: 100px;
+    }
+    .complete{
+        margin-top: 50px;
+    }
+
+    .border{
+        border-radius: 4px;
+    }
+
+    .complete .border{
+        border: 3px black solid;
+    }
+
+    .border a{
+        font-size: smaller;
+    }
+
+    .incomplete .border{
+        border: 3px black solid;
+    }
+</style>
+{% endblock %}

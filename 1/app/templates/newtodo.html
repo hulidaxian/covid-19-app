@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}{% endblock %}
+{% block content %}
+
+
+<form method="POST" action="/newtodo">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+      {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+              <span>{{ message }}</span>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+      {% endfor %}
+  {% endif %}
+{% endwith %}
+  <h2>New Todo</h2>
+  <p>____________________________</p>
+  {{ form.hidden_tag() }}
+  {{ wtf.form_field(form.todo)}}
+  {{ wtf.form_field(form.submit)}}
+</form> 
+
+<style>
+  form{
+    margin-top: 100px;
+  }
+</style>
+{% endblock %}
